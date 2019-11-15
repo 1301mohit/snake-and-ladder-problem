@@ -15,6 +15,7 @@ die3=3
 die4=4
 die5=5
 die6=6
+countWin=0
 
 while [ $position -lt $winningPosition ]
 do
@@ -60,6 +61,7 @@ do
 			position=$(($position+$checkDie))
 			;;
 		esac
+		((countWin++))
 		;;
 	$snake)
 		position=$(($position-$checkDie))
@@ -70,5 +72,6 @@ do
 		;;
 	esac
 done
+echo "Winning count:"$countWin
 
 
