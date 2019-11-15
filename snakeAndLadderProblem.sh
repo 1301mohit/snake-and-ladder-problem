@@ -2,76 +2,54 @@
 
 echo Welcome to Snake and Ladder Simulator
 
+
+STARTING_POSITION=0
+WINNING_POSITION=100
+NO_PLAY=0
+LADDER=1
+SNAKE=2
+PLAYER1=0
+PLAYER2=1
+
+lastPosition=0
 position=0
 option=0
-startingPosition=0
-winningPosition=100
-noPlay=0
-ladder=1
-snake=2
-die1=1
-die2=2
-die3=3
-die4=4
-die5=5
-die6=6
 countWin=0
+player=0
 
-while [ $position -lt $winningPosition ]
+while [ $position -lt $WINNING_POSITION ]
 do
 	checkDie=$((RANDOM % 6 + 1))
 	option=$((RANDOM % 3))
+	((countWin++))
 	case $option in
-	$noPlay)
+	$NO_PLAY)
 		position=$position
 		;;
-	$ladder)
-		case $position in
-		95)
-			if [ $checkDie -lt 5 ]
-			then
-				position=$(($position+$checkDie))
-			fi
-			;;
-		96)
-			if [ $checkDie -lt 4 ]
-			then
-				position=$(($position+$checkDie))
-			fi
-			;;
-		97)
-			if [ $checkDie -lt 3 ]
-			then
-				position=$(($position+$checkDie))
-			fi
-			;;
-		98)
-			if [ $checkDie -lt 2 ]
-			then
-				position=$(($position+$checkDie))
-			fi
-			;;
-		99)
-			if [ $checkDie -lt 1 ]
-			then
-				position=$(($position+$checkDie))
-			fi
-			;;
-		*)
-			position=$(($position+$checkDie))
-			;;
-		esac
-		((countWin++))
+	$LADDER)
+		lastPosition=$position
+		position=$(($position+$checkDie))
+		if [ $position -gt $WINNING_POSITION ]
+		then
+			position=$lastPosition
+		fi
 		;;
-	$snake)
+	$SNAKE)
 		position=$(($position-$checkDie))
-		if [ $position -lt $startingPosition ]
+		if [ $position -lt $STARTING_POSITION ]
 		then
 			position=0
 		fi
 		;;
 	esac
+	if [ $player -eq $PLAYER1 ]
+	then
+		player=$PLAYER2
+	else
+		player=$PLAYER1
+	fi
 done
 echo "Winning count:"$countWin
+echo "Winning player:"$player
 
 
