@@ -16,8 +16,8 @@ position=0
 position1=0
 position2=0
 option=0
-countWin1=0
-countWin2=0
+diceCountForPlayer1=0
+diceCountForPlayer2=0
 player=0
 
 function play()
@@ -49,27 +49,35 @@ function play()
 	esac
 }
 
-while [ $position1 -lt $WINNING_POSITION ] || [ $position2 -lt $WINNING_POSITION ]
+while [ $position1 -lt $WINNING_POSITION ] && [ $position2 -lt $WINNING_POSITION ]
 do
 	if [ $player -eq $PLAYER1 ]
 	then
-		((countWin1++))
+		((diceCountForPlayer1++))
 		position1="$( play $position1 )"
-		player=$PLAYER2
+		if [ $position1 -lt $WINNING_POSITION ]
+		then
+			player=$PLAYER2
+		fi
+		echo $player
 	else
-		((countWin2++))
+		((diceCountForPlayer2++))
 		position2="$( play $position2 )"
-		player=$PLAYER1
+		if [ $position2 -lt $WINNING_POSITION ]
+		then
+			player=$PLAYER1
+		fi
+		echo $player
 	fi
 done
 
 if [ $player -eq $PLAYER1 ]
 then
-	echo "Winning count:"$countWin1
+	echo "Winning count for player1:"$diceCountForPlayer1
 else
-	echo "Winning Count:"$countWin2
+	echo "Winning Count for player2:"$diceCountForPlayer2
 fi
 
-echo "Winning player: Player"$player
+echo "Winning player: Player"$(($player+1))
 
 
