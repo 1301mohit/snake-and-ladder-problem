@@ -25,12 +25,47 @@ do
 		position=$position
 		;;
 	$ladder)
-		position=$(($position+$checkDie))
-		if [ $position -gt $winningPosition ]
-		then
-			position=100
-		fi
+		case $position in
+		95)
+			if [ $checkDie -lt 5 ]
+			then
+				position=$(($position+$checkDie))
+			fi
+			;;
+		96)
+			if [ $checkDie -lt 4 ]
+			then
+				position=$(($position+$checkDie))
+			fi
+			;;
+		97)
+			if [ $checkDie -lt 3 ]
+			then
+				position=$(($position+$checkDie))
+			fi
+			;;
+		98)
+			if [ $checkDie -lt 2 ]
+			then
+				position=$(($position+$checkDie))
+			fi
+			;;
+		99)
+			if [ $checkDie -lt 1 ]
+			then
+				position=$(($position+$checkDie))
+			fi
+			;;
+		*)
+			position=$(($position+$checkDie))
+			;;
+		esac
 		;;
+	#	if [ $position -gt $winningPosition ]
+	#	then
+	#		position=100
+	#	fi
+	#	;;
 	$snake)
 		position=$(($position-$checkDie))
 		if [ $position -lt $startingPosition ]
