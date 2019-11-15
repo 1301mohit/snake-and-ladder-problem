@@ -61,11 +61,6 @@ do
 			;;
 		esac
 		;;
-	#	if [ $position -gt $winningPosition ]
-	#	then
-	#		position=100
-	#	fi
-	#	;;
 	$snake)
 		position=$(($position-$checkDie))
 		if [ $position -lt $startingPosition ]
