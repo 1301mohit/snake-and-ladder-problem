@@ -20,9 +20,8 @@ diceCountForPlayer1=0
 diceCountForPlayer2=0
 player=0
 
-function play()
+function position()
 {
-	checkDie=$((RANDOM % 6 + 1))
 	option=$((RANDOM % 3))
 	case $option in
 	$NO_PLAY)
@@ -49,35 +48,53 @@ function play()
 	esac
 }
 
-while [ $position1 -lt $WINNING_POSITION ] && [ $position2 -lt $WINNING_POSITION ]
-do
+function play()
+{
+	checkDie=$((RANDOM % 6 + 1))
+	position="$( position $1 )"
+	echo $position
+}
+
+function win()
+{
+	while [ $position1 -lt $WINNING_POSITION ] && [ $position2 -lt $WINNING_POSITION ]
+	do
+		if [ $player -eq $PLAYER1 ]
+		then
+			((diceCountForPlayer1++))
+			position1="$( play $position1 )"
+			if [ $position1 -lt $WINNING_POSITION ]
+			then
+				player=$PLAYER2
+			fi
+			echo $player
+		else
+			((diceCountForPlayer2++))
+			position2="$( play $position2 )"
+			if [ $position2 -lt $WINNING_POSITION ]
+			then
+				player=$PLAYER1
+			fi
+			echo $player
+		fi
+	done
+}
+
+function main()
+{
+	win
 	if [ $player -eq $PLAYER1 ]
 	then
-		((diceCountForPlayer1++))
-		position1="$( play $position1 )"
-		if [ $position1 -lt $WINNING_POSITION ]
-		then
-			player=$PLAYER2
-		fi
-		echo $player
+		echo "Winning count for player1:"$diceCountForPlayer1
 	else
-		((diceCountForPlayer2++))
-		position2="$( play $position2 )"
-		if [ $position2 -lt $WINNING_POSITION ]
-		then
-			player=$PLAYER1
-		fi
-		echo $player
+		echo "Winning Count for player2:"$diceCountForPlayer2
 	fi
-done
 
-if [ $player -eq $PLAYER1 ]
-then
-	echo "Winning count for player1:"$diceCountForPlayer1
-else
-	echo "Winning Count for player2:"$diceCountForPlayer2
-fi
+	echo "Winning player: Player"$(($player+1))
+	
+}
 
-echo "Winning player: Player"$(($player+1))
+main
+
 
 
