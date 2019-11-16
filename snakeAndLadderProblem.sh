@@ -13,9 +13,6 @@ PLAYER2=1
 
 lastPosition=0
 position=0
-position1=0
-position2=0
-option=0
 diceCountForPlayer1=0
 diceCountForPlayer2=0
 player=0
@@ -57,6 +54,8 @@ function play()
 
 function win()
 {
+	position1=0
+	position2=0
 	while [ $position1 -lt $WINNING_POSITION ] && [ $position2 -lt $WINNING_POSITION ]
 	do
 		if [ $player -eq $PLAYER1 ]
