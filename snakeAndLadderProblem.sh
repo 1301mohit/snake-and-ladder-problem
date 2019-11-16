@@ -2,7 +2,7 @@
 
 echo Welcome to Snake and Ladder Simulator
 
-
+#Constants
 STARTING_POSITION=0
 WINNING_POSITION=10
 NO_PLAY=0
@@ -11,6 +11,7 @@ SNAKE=2
 PLAYER1=0
 PLAYER2=1
 
+#Global variables
 lastPosition=0
 position=0
 diceCountForPlayer1=0
@@ -84,9 +85,9 @@ function main()
 	win
 	if [ $player -eq $PLAYER1 ]
 	then
-		echo "Winning count for player1:"$diceCountForPlayer1
+		echo "Total dice count for player1:"$diceCountForPlayer1
 	else
-		echo "Winning Count for player2:"$diceCountForPlayer2
+		echo "Total dice count for player2:"$diceCountForPlayer2
 	fi
 
 	echo "Winning player: Player"$(($player+1))
